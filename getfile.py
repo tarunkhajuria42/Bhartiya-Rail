@@ -2,15 +2,15 @@
 import xlwt
 import shelve
 from os import listdir
-files=listdir("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late")
+files=listdir("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late Trains")
 book=xlwt.Workbook(encoding="utf-8")
 sheet=book.add_sheet("Dat")
 date=shelve.open('C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Dates')
 date=date['new']
 cate={}
 for fil in files:
-	obj=shelve.open("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late\\"+fil)
-	dicti=obj['index']
+	obj=shelve.open("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late Trains\\"+fil)
+	dicti=obj['trains_late']
 	sheet.write(1,date[fil],fil)
 	for key in dicti.keys():
 		if key in cate.keys():

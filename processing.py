@@ -6,7 +6,7 @@ for fil in files:
 	print fil
 	obj=shelve.open("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late\\"+fil)
 	new={}
-	dicti=obj['hours']
+	dicti=obj['trains_late']
 	for key in dicti.keys():
 		new[key]=-100*dicti[key]/obj['total']
 	obj['index']=new
