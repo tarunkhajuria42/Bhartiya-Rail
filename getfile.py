@@ -2,22 +2,20 @@
 import xlwt
 import shelve
 from os import listdir
-files=listdir("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late Trains")
+files=listdir("C:\\Users\\GLADOS\\Desktop\\File")
 book=xlwt.Workbook(encoding="utf-8")
 sheet=book.add_sheet("Dat")
-date=shelve.open('C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Dates')
-date=date['new']
 cate={}
 for fil in files:
-	obj=shelve.open("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late Trains\\"+fil)
-	dicti=obj['trains_late']
-	sheet.write(1,date[fil],fil)
+	obj=shelve.open("C:\\Users\\GLADOS\\Desktop\\File\\"+fil)
+	dicti=obj['hours']
+	sheet.write(1,obj['number'],fil)
 	for key in dicti.keys():
 		if key in cate.keys():
-			sheet.write(cate[key],date[fil],dicti[key])
+			sheet.write(cate[key],obj['number'],dicti[key])
 		else:
 			cate[key]=len(cate.keys())+2
 			sheet.write(cate[key],0,key)	
-			sheet.write(cate[key],date[fil],dicti[key])
+			sheet.write(cate[key],obj['number'],dicti[key])
 	obj.close()
-book.save("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data New\\index.xls")
+book.save("C:\\Users\\GLADOS\\Desktop\\File\\timeLate.xls")

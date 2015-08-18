@@ -27,7 +27,7 @@ def resolveMins(time):
 					try:
 						mins=int(re.sub("[^0-9]", "",time))
 					except:
-						return -1
+						return -1	
 			mins=hour*60+mins
 			return mins
 		elif(type(time)==float):
@@ -40,39 +40,41 @@ import math
 import re
 # Open workbook
 import shelve
-halt=shelve.open("C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\Data Late\\15_5.dat")
+halt=shelve.open("C:\\Users\\GLADOS\\Desktop\\File\\20.dat")
 hours={}
 number={}
 maxi={}
 default=0
 total_time=0
-late_trains=0
-book=xlrd.open_workbook('C:\\Users\\Tarun Khajuria\\Desktop\\Indian Railways\\ASSETS FAILURES FROM APRIL TO MAY 2015\\May 2015\\15.05.15.xlsx')
+late_trains={}
+book=xlrd.open_workbook("C:\\Users\\GLADOS\\Desktop\\June Asset Summary.xlsx")
 sheet=book.sheet_by_index(0)
-for row in range(4,sheet.nrows):
+for row in range(4680,4879):
 	rowe=sheet.row(row)
-	fault=rowe[3].value	
+	fault=rowe[4].value	
 	fault=fault.replace(" ","")
-	no_trains=rowe[11].value
-	time=resolveMins(rowe[12])
+	no_trains=rowe[12].value
+	time=resolveMins(rowe[13])
 	if(time>=0 and fault!="" and type(no_trains)==float):
 		total_time=total_time+(time*int(no_trains))
-		late_trains=late_trains+int(no_trains)
 	# Check for cell type date
 		if(hours.has_key(fault)):
 			hours[fault]=hours[fault]+(time*int(no_trains))
 			number[fault]=number[fault]+1
+			late_trains[fault]=late_trains[fault]+int(no_trains)
 			if(maxi[fault]<time):
 				maxi[fault]=time
 		else:
 			hours[fault]=time*int(no_trains)
+			late_trains[fault]=int(no_trains)
 			number[fault]=1
 			maxi[fault]=time
 	else:
 		default=default+1
-halt['hours']=hours
+halt['hours']=hours   # Number of hours for each 
 halt['number']=number
 halt['maximum']=maxi
+halt['number']=20
 halt['defauter']=default
 halt['total']=total_time
 halt['trains_late']=late_trains
